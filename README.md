@@ -25,7 +25,7 @@ git clone https://github.com/skyfirepro/docker-nuxt-basic-template.git
 COMPOSE_PROJECT_NAME=projectname
 ```
 
-1. Set the same project-name as proxy_pass in ``nginx/dev/nginx.conf`` (Ex. if you set **foo-bar** as project name - http://foo-bar-app:3000)
+3. Set the same project-name as proxy_pass in ``nginx/dev/nginx.conf`` (Ex. if you set **foo-bar** as project name - http://foo-bar-app:3000)
 
 ```bash
 proxy_pass    http://projectname-app:3000;
