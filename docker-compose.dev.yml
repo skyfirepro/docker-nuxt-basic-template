@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+  nuxt:
+    build:
+      context: ./nuxt-app
+      dockerfile: ../dockerfiles/Dockerfile-dev
+    ports:
+      - 3000:3000
+    tty: true
+
+  db:
+    environment:
+      MYSQL_DATABASE: ${COMPOSE_PROJECT_NAME}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+  nginx:
+    volumes:
+      - ./nginx/dev/:/etc/nginx/conf.d/
+      - ./nginx/logs:/var/log/nginx/
+    logging:
+      driver: none
+
+  phpmyadmin:
+    image: phpmyadmin:5.0.4
+    container_name: ${COMPOSE_PROJECT_NAME}-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    logging:
+      driver: none
+
+

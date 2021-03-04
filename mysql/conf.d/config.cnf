@@ -1,0 +1,8 @@
+[client]
+
+[mysql]
+
+[mysqld]
+general-log=1
+general-log-file=/var/log/mysql/mysql.log
+

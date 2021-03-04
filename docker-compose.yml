@@ -1,0 +1,50 @@
+version: "3.3"
+
+services:
+  nuxt:
+    build:
+      context: ./nuxt-app
+      dockerfile: ../dockerfiles/Dockerfile-prod
+    container_name: ${COMPOSE_PROJECT_NAME}-app
+    restart: unless-stopped
+    volumes:
+      - ./nuxt-app:/app
+      - /app/node_modules
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "3000"
+
+  db:
+    image: mysql:8.0.23
+    container_name:  ${COMPOSE_PROJECT_NAME}-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${COMPOSE_PROJECT_NAME} 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf.d/:/etc/mysql/conf.d
+      - ./mysql/log:/var/log/mysql
+
+  nginx:
+    image: nginx:1.19.7
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx/prod/:/etc/nginx/conf.d/
+      - ./nginx/log:/var/log/nginx/
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - nuxt
+
+
+
+
+
+
+
+
