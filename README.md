@@ -47,7 +47,7 @@ $ docker exec -it projectname-app sh
 
 ```bash
 $ npm i -g create-nuxt-app
-$ npx create-nuxt-app .
+$ create-nuxt-app .
 ```
 
 > Note: If you get ``Can't create . because there's already a non-empty directory . existing in path.`` you need delete all files and folders in nuxt-app
@@ -70,13 +70,12 @@ CMD ["npm", "run", "dev"]
 node_modules
 ```
 
-9. Then you need stop all containers (ctrl + S) and launch with the ``docker-compose`` command.
+9. Then you need stop all containers (ctrl + c) and launch with the ``docker-compose`` command.
 ```bash
 Stopping projectname-app ... done
 Stopping projectname-mysql ... done
 Stopping projectname-phpmyadmin ... done
 Stopping projectname-nginx ... done
-... 
 $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 ```
 
@@ -88,7 +87,7 @@ $ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 
 
-> Note: If you have any problems with hot module replacement, you need add watchers to ``nuxt.config.js``
+> Note: If you have any problems with hot module replacement, you need add watchers to ``nuxt.config.js`` and restart nuxt container
 ```bash
 watchers: {
   webpack: {
@@ -96,6 +95,10 @@ watchers: {
   }
 },
 ```
+```bash
+$ docker restart projectname-app
+```
+
 #### Backend with Express
 Enter the nuxt container.
 ```bash
